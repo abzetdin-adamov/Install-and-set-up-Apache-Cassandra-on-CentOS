@@ -50,9 +50,23 @@ Status=Up/Down
 --  Address    Load       Tokens       Owns (effective)  Host ID                               Rack
 UN  127.0.0.1  237.64 KB  256          100.0%            3acb6900-99a6-495d-99c4-652832ceb0f6  rack1
 ```
-
+Now Cassandra is installed and you can start CQL (Cassandra Query Language) shell typing
+```
+CQLSH
+```
 
 
 ## Cassandra Data Model Essentials
+
+First of all everyone who are new to Cassandra should accept that it is not Relational DBMS. There are some fundamental differences that affect the way how you use it. Cassandra is NoSQL DBMS, but it doesn't mean that you are not allowed to use SQL, rather it means you can use NOT ONLY SQL.
+First of all let look to key terminology differences between most of RDBMS and Cassandra.
+
+| RDBMS | Cassandra |
+| --- | --- |
+| Database | Keyspace |
+| Table | Column Family |
+| Primary Key | Row Key |
+| Fixed Schema | Flexible Schema |
+
 
 
