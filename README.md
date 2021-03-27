@@ -40,4 +40,14 @@ Check the status of service to make sure that it started and running
 ```
 systemctl start cassandra
 ```
+Run the command ```nodetool status``` to make sure that cluster is up and running normal
+As a result you are expected to see the response that similar to the following. Pay attention to UN that means UP and NORMAL
+```
+Datacenter: datacenter1
+=======================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address    Load       Tokens       Owns (effective)  Host ID                               Rack
+UN  127.0.0.1  237.64 KB  256          100.0%            3acb6900-99a6-495d-99c4-652832ceb0f6  rack1
+```
 
