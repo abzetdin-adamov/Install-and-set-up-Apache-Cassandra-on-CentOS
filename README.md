@@ -126,7 +126,7 @@ you will get following error message
 InvalidRequest: Error from server: code=2200 [Invalid query] message="Cannot execute this query as it might involve data filtering and thus may have unpredictable performance. 
 If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING"
 ```
-Because ```name``` is not Key, it is unknown to Cossandra how the field is partitioned and on which of nodes certain records to look for. Using following ALLOW FILTERING clause it is possible to ignore the error, but in real cluster it may bring to significant performance degradation and strongly not recommended.
+Because ```name``` is not Key, it is unknown to Cossandra how the data is partitioned according to the field and on which of nodes certain records to look for. Using following ALLOW FILTERING clause it is possible to ignore the error, but in real cluster it may bring to significant performance degradation and strongly not recommended.
 ```
 SELECT * FROM staff WHERE name = 'Samir' ALLOW FILTERING;
 ```
