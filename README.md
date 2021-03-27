@@ -51,6 +51,8 @@ Status=Up/Down
 UN  127.0.0.1  237.64 KB  256          100.0%            3acb6900-99a6-495d-99c4-652832ceb0f6  rack1
 ```
 
-** Cassandra Data Model Essentials
+
+
+## Cassandra Data Model Essentials
 
 
