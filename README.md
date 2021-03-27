@@ -100,4 +100,9 @@ INSERT INTO staff (id, name, surname, email, bdate) VALUES (2, 'Kamil', 'Safarov
 INSERT INTO staff (id, name, surname, email, bdate) VALUES (3, 'Arzu', 'Karimlu', 'arzu@SimpleStrategy.az', todate('1989-07-19'));
 INSERT INTO staff (id, name, surname, email, bdate) VALUES (4, 'Nigar', 'Aghayeva', 'nigar@strategy.az', todate('1989-09-29'));
 ```
-
+To get description of Keyspace or Column Family use following commands
+```
+describe my_keyspace;
+describe my_keyspace.staff;
+describe tables;
+```
