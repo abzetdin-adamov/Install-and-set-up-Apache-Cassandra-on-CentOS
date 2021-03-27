@@ -54,7 +54,10 @@ Now Cassandra is installed and you can start CQL (Cassandra Query Language) shel
 ```
 CQLSH
 ```
-
+Following option are available to produce colored output  
+```
+cqlsh --color
+```
 
 ## Cassandra Data Model Essentials
 
@@ -68,5 +71,33 @@ First of all let look to key terminology differences between most of RDBMS and C
 | Primary Key | Row Key |
 | Fixed Schema | Flexible Schema |
 
-
+To see the list of available Keyspaces
+```
+DESCRIBE keyspaces;
+```
+To see the list of available Keyspaces with attributes (including replication factor)
+```
+SELECT * FROM system_schema.keyspaces;
+```
+To create new Keyspace (Database in terms of RDBMS) 
+```
+CREATE KEYSPACE my_keyspace WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
+```
+Now let create Column Family (Table). As you can see CQL is very much looks like SQL. To activate Keyspace the command ```USE my_keyspace``` can be use. In this case there is no need to use alias as I used in following snippet
+```
+CREATE TABLE IF NOT EXISTS my_keyspace.staff (
+id int PRIMARY KEY, 
+name text, 
+surname text, 
+email text,
+bdate date
+) 
+```
+Let now inster several records to the Column Family
+```
+INSERT INTO staff (id, name, surname, email, bdate) VALUES (1, 'Samir', 'Memmedov', 's@samir.az', todate(now()));
+INSERT INTO staff (id, name, surname, email, bdate) VALUES (2, 'Kamil', 'Safarov', 'k@safar.az', todate('1985-03-23'));
+INSERT INTO staff (id, name, surname, email, bdate) VALUES (3, 'Arzu', 'Karimlu', 'arzu@SimpleStrategy.az', todate('1989-07-19'));
+INSERT INTO staff (id, name, surname, email, bdate) VALUES (4, 'Nigar', 'Aghayeva', 'nigar@strategy.az', todate('1989-09-29'));
+```
 
