@@ -61,7 +61,7 @@ cqlsh --color
 
 ## Cassandra Data Model Essentials
 
-First of all everyone who are new to Cassandra should accept that it is not Relational DBMS. There are some fundamental differences that affect the way how you use it. Cassandra is NoSQL DBMS, but it doesn't mean that you are not allowed to use SQL, rather it means you can use NOT ONLY SQL.
+First of all everyone who are new to Cassandra should accept that it is not Relational DBMS. There are some fundamental differences that affect the way how you use it. For example, you can't create relation between table using Primary and Foreign keys as you do in RDBMS. If you need to bring together attributes from two table, you should create new table. Cassandra is NoSQL DBMS, but it doesn't mean that you are not allowed to use SQL, rather it means you can use NOT ONLY SQL. 
 First of all let look to key terminology differences between most of RDBMS and Cassandra.
 
 | RDBMS | Cassandra |
@@ -75,7 +75,7 @@ To see the list of available Keyspaces
 ```
 DESCRIBE keyspaces;
 ```
-To see the list of available Keyspaces with attributes (including replication factor)
+or see the list of available Keyspaces with attributes (including replication factor)
 ```
 SELECT * FROM system_schema.keyspaces;
 ```
@@ -105,4 +105,23 @@ To get description of Keyspace or Column Family use following commands
 describe my_keyspace;
 describe my_keyspace.staff;
 describe tables;
+```
+Now we can retrieve records same as in case of SQL RDBMS
+```
+SELECT * FROM staff;
+```
+CQL provides very usefull way of tranforming data into JSON in fly
+```
+SELECT JSON * FROM staff;
+```
+Use the setting ```EXPAND ON | OFF``` to show results in expanded mode
+
+If you use WHERE clause in SELECT applied to the field with Primary Key ```SELECT * FROM staff WHERE id = 2;``` it'll bring you result as it is expected.
+But if you try to pick a record based on another field
+```
+SELECT * FROM staff WHERE name = 'Samir';
+```
+you will get following error message
+```
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Cannot execute this query as it might involve data filtering and thus may have unpredictable performance. If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING"
 ```
