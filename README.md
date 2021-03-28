@@ -135,8 +135,10 @@ SELECT * FROM staff WHERE name = 'Samir' ALLOW FILTERING;
 When it comes to physical location of data on disk, by default Cassanrda stores it in ```/var/lib/cassandra/data```. The default directory for the node can be changed by ```data_file_directories:``` setting in ```/etc/cassandra/conf/cassandra.yaml``` Cassandra settings file.
 
 **Commitlog** - any writing operation to cluster gloing to be firstly written in ```commitlog``` file located in the dedicated directory ```commitlog_directory: /var/lib/cassandra/commitlog```. The commit log is shared among tables.
-**Memtable** - in-memory buffer (cache) where Cassandra stores operational Column Family (table) until it reaches the limit when it going to be flushed to SSTable on the disk;
-**SSTables** - _Sorted Strings Table_ where Cassandra stores Column Family of disk. SSTable is immutable between flushes from memtables. One SSTable is created per table; To get the list of all SSTables under particular Keyspace (database) use following directory ```/var/lib/cassandra/data/<keyspace_name>``` 
+
+**Memtable** - in-memory buffer (cache) where Cassandra stores operational Column Family (table) until it reaches the limit when it going to be flushed to SSTable on the disk. The command ```nodetool flush``` forces flushing from memtable to SSTable on the disk.
+
+**SSTables** - _Sorted Strings Table_ where Cassandra stores Column Family of disk. SSTable is immutable between flushes from memtables. One SSTable is created per table; To get the list of all SSTables under particular Keyspace (database) use following directory ```/var/lib/cassandra/data/<keyspace_name>```. For each Column Family within keyspace, Cassandra creates list of associated files with extention *.db. 
 Following list demonstrates the content of my ```ada_keyspace``` keyspace
 ```
 $ ls -la /var/lib/cassandra/data/ada_keyspace/staff-8b98db208bee11eb9fad414d896851fe/
