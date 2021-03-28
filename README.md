@@ -130,4 +130,34 @@ Because ```name``` is not Key, it is unknown to Cossandra how the data is partit
 ```
 SELECT * FROM staff WHERE name = 'Samir' ALLOW FILTERING;
 ```
+## Cassandra Physical Data Storage
 
+When it comes to physical location of data on disk, by default Cassanrda stores it in ```/var/lib/cassandra/data```. The default directory for the node can be changed by ```data_file_directories:``` setting in ```/etc/cassandra/conf/cassandra.yaml``` Cassandra settings file.
+
+**Commitlog** - any writing operation to cluster gloing to be firstly written in ```commitlog``` file located in the dedicated directory ```commitlog_directory: /var/lib/cassandra/commitlog```. The commit log is shared among tables.
+**Memtable** - in-memory buffer (cache) where Cassandra stores operational Column Family (table) until it reaches the limit when it going to be flushed to SSTable on the disk;
+**SSTables** - _Sorted Strings Table_ where Cassandra stores Column Family of disk. SSTable is immutable between flushes from memtables. One SSTable is created per table; To get the list of all SSTables under particular Keyspace (database) use following directory ```/var/lib/cassandra/data/<keyspace_name>``` 
+Following list demonstrates the content of my ```ada_keyspace``` keyspace
+```
+$ ls -la /var/lib/cassandra/data/ada_keyspace/staff-8b98db208bee11eb9fad414d896851fe/
+total 76
+drwxr-xr-x 3 cassandra cassandra 4096 Mar 24 02:46 .
+drwxr-xr-x 3 cassandra cassandra   52 Mar 23 11:43 ..
+drwxr-xr-x 2 cassandra cassandra    6 Mar 23 11:43 backups
+-rw-r--r-- 1 cassandra cassandra   43 Mar 23 15:50 md-1-big-CompressionInfo.db
+-rw-r--r-- 1 cassandra cassandra  169 Mar 23 15:50 md-1-big-Data.db
+-rw-r--r-- 1 cassandra cassandra   10 Mar 23 15:50 md-1-big-Digest.crc32
+-rw-r--r-- 1 cassandra cassandra   16 Mar 23 15:50 md-1-big-Filter.db
+-rw-r--r-- 1 cassandra cassandra   24 Mar 23 15:50 md-1-big-Index.db
+-rw-r--r-- 1 cassandra cassandra 4827 Mar 23 15:50 md-1-big-Statistics.db
+-rw-r--r-- 1 cassandra cassandra   56 Mar 23 15:50 md-1-big-Summary.db
+-rw-r--r-- 1 cassandra cassandra   92 Mar 23 15:50 md-1-big-TOC.txt
+-rw-r--r-- 1 cassandra cassandra   43 Mar 24 02:46 md-2-big-CompressionInfo.db
+-rw-r--r-- 1 cassandra cassandra   71 Mar 24 02:46 md-2-big-Data.db
+-rw-r--r-- 1 cassandra cassandra   10 Mar 24 02:46 md-2-big-Digest.crc32
+-rw-r--r-- 1 cassandra cassandra   16 Mar 24 02:46 md-2-big-Filter.db
+-rw-r--r-- 1 cassandra cassandra    8 Mar 24 02:46 md-2-big-Index.db
+-rw-r--r-- 1 cassandra cassandra 4819 Mar 24 02:46 md-2-big-Statistics.db
+-rw-r--r-- 1 cassandra cassandra   56 Mar 24 02:46 md-2-big-Summary.db
+-rw-r--r-- 1 cassandra cassandra   92 Mar 24 02:46 md-2-big-TOC.txt
+```
